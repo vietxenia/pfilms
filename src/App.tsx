@@ -5,32 +5,33 @@ import WTable from "./components/table/Table.jsx";
 import {Wloading} from "./components/Loading.jsx";
 
 function App() {
-  type dataType = {
-    results?: any[]
-  };
-  const defaultData: dataType = {};
-  const [data, setData] = useState(defaultData);
-  const [loadedData, setLoadedData] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
+    type dataType = {
+        results?: any[]
+    };
 
-  useEffect(
-    () => {   
-      if (!loadedData) {
-          let ajaxUrl = new URL("https://swapi.dev/api/films");
-          ajaxUrl.searchParams.set("format","json");
+    const defaultData: dataType = {};
+    const [data, setData] = useState(defaultData);
+    const [loadedData, setLoadedData] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
-          fetch( ajaxUrl.toString(), {
-            method: 'GET',
-            })
-            .then(res => res.json())
-            .then(
-              (result) => {
-                setData(result);
-                setLoadedData(true);
-                setIsLoading(false);
-              }).catch( err => console.log( err ) );
+    useEffect(
+        () => {   
+        if (!loadedData) {
+            let ajaxUrl = new URL("https://swapi.dev/api/films");
+            ajaxUrl.searchParams.set("format","json");
+
+            fetch( ajaxUrl.toString(), {
+                method: 'GET',
+                })
+                .then(res => res.json())
+                .then(
+                (result) => {
+                    setData(result);
+                    setLoadedData(true);
+                    setIsLoading(false);
+                }).catch( err => console.log( err ) );
+            }
         }
-      }
     );
 
   const userHeading = [
@@ -42,17 +43,19 @@ function App() {
 
     return (
     <div className="App">
-      <header className="App-header u-txt--center">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
-      <div className="c-table__container">
-        <WTable 
-            colKeys={["title","director","producer","release_date"]}
-            headings={userHeading} 
-            rows={data.results ? data.results : []}
-          />
-      </div>
-      <Wloading isLoading={isLoading} />
+        <header className="App-header u-txt--center">
+            <img src={logo} className="App-logo" alt="logo" />
+        </header>
+
+        <div className="c-table__container">
+            <WTable 
+                colKeys={["title","director","producer","release_date"]}
+                headings={userHeading} 
+                rows={data.results ? data.results : []}
+                />
+        </div>
+        
+        <Wloading isLoading={isLoading} />
       
     </div>
   );

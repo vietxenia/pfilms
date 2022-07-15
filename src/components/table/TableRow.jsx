@@ -14,7 +14,7 @@ function TableRow(props) {
     let tblRow=[];
   
     if (!(typeof row === 'object' && row !== null)) {
-      return <></>;
+        return <></>;
     }
   
     const keys = Array.isArray(colKeys) ? colKeys : Object.keys(row);
